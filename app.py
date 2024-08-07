@@ -19,28 +19,24 @@ dragons =  [
 ]
 
 # Rota padrão
-# GET / - Página inicial da API, retorna uma mensagem simples
 @app.route('/')
 def index():
     return "Dragões API"
 
 # Rota para obter dados de todos os dragões
-# Método GET /dragons  Retorna dados de todos os dragões
 @app.route('/dragons', methods=['GET'])
 def get_dragons():
     return jsonify(dragons)
 
 # Rota para obter dados de um dragão pelo id
-# Método GET /dragons/<int:dragon_id> - Retorna dados de um dragão específico pelo ID.
 @app.route('/dragons/<int:dragon_id>', methods=['GET'])
 def get_dragon(dragon_id):
     dragon = next((d for d in dragons if d['id'] == dragon_id), None)
     if dragon is None:
-        return jsonify({"dracarys": "Dragon not found"}), 404
+        return jsonify({"error": "Dragon not found"}), 404
     return jsonify(dragon)
 
 # Rota para adicionar um dragão
-# Método POST /dragons - Adiciona um novo dragão.
 @app.route('/dragons', methods=['POST'])
 def add_dragon(): 
     data = request.json 
@@ -54,12 +50,10 @@ def add_dragon():
         "rider_count": data.get("rider_count") 
     } 
     dragons.append(new_dragon) 
+    print(f"Added dragon: {new_dragon}")
     return jsonify(new_dragon), 201
 
-
-
 # Rota para atualizar dados de um dragão específico
-# PUT /dragons/<int:dragon_id> - Atualiza dados de um dragão específico pelo ID.
 @app.route('/dragons/<int:dragon_id>', methods=['PUT'])
 def update_dragon(dragon_id): 
     dragon = next((d for d in dragons if d['id'] == dragon_id), None) 
@@ -77,7 +71,6 @@ def update_dragon(dragon_id):
 
 
 #Rota para deletar um dragão específico
-#DELETE /dragons/<int:dragon_id> - Deleta um dragão específico pelo ID.
 @app.route('/dragons/<int:dragon_id>', methods=['DELETE'])
 def delete_dragon(dragon_id): 
     global dragons 
