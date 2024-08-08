@@ -41,7 +41,7 @@ API desenvolvida em Flask com informações sobre os dragões dos livros das Cro
     ```bash
      python app.py # na raiz do projeto
 
-A API estará disponível em \`http://localhost:5000\`.
+A API estará disponível em  http://localhost:5000\
 
 
 
